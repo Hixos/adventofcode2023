@@ -1,7 +1,6 @@
 use std::fs::File;
 use std::io::{self, BufReader, prelude::*};
 use std::path::Path;
-
 const DIGIT_WORDS: [&str; 20] = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 
 fn get_digit(line_chars: impl Iterator<Item = char> + Clone, rev: bool) -> u32 {
