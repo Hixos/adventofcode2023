@@ -15,7 +15,7 @@ impl Day2 {
         Day2 {n_red: red, n_blue: blue, n_green: green, games: vec![]}
     }
 
-    fn process_input(&mut self, line: &String) {
+    fn process_input(&mut self, line: String) {
         let game = Game::from_string(line.as_str());
 
         self.games.push(game);

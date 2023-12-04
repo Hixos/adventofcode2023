@@ -8,12 +8,14 @@ where P: AsRef<Path> {
     Ok(reader.lines())
 }
 
-pub fn process_lines(file: &str, mut fun: impl FnMut(&String)) {
+pub fn process_lines(file: &str, mut fun: impl FnMut(String)) {
     if let Ok(lines) = read_lines(file) {
         for l in lines {
             if let Ok(l) = l {
-                fun(&l);
+                fun(l);
             }
         }
+    }else{
+        panic!("Could not read file!");
     }
 }
