@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 use aoc2023::process_lines;
 
@@ -36,7 +36,7 @@ impl Day7 {
         let mut games: Vec<Game> = vec![];
 
         process_lines(file, |line| {
-            let mut split = line.split(" ");
+            let mut split = line.split(' ');
 
             let cards = split.next().unwrap().to_owned();
             let bid = split.next().unwrap().parse::<u32>().unwrap();
