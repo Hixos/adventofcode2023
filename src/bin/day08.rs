@@ -42,18 +42,62 @@ impl Day8 {
             }
         });
 
-        Day8 {dirs, network}
+        Day8 { dirs, network }
     }
 
     fn count_steps(&self) -> usize {
-        let mut key = "AAA".to_string();
+        let mut key = &"AAA".to_string();
         let mut steps = 0usize;
 
         while key != "ZZZ" {
             let dir = self.dirs[steps % self.dirs.len()];
-            key = self.network.get(&key).unwrap()[dir].clone();
+            key = &self.network.get(key).unwrap()[dir];
 
             steps += 1;
+        }
+
+        steps
+    }
+
+    fn count_steps_sigle_p2(&self, start_key: &String) -> usize {
+        let mut key = start_key;
+        let mut steps = 0usize;
+
+        while !key.ends_with('Z') {
+            let dir = self.dirs[steps % self.dirs.len()];
+            key = &self.network.get(key).unwrap()[dir];
+
+            steps += 1;
+        }
+
+        steps
+    }
+
+    fn count_steps_p2(&self) -> usize {
+        use num::integer::lcm;
+
+        let keys = self
+            .network
+            .keys()
+            .filter(|&k| k.ends_with('A'))
+            .collect::<Vec<&String>>();
+
+        println!("{:?}", keys);
+
+        let steps_vec: Vec<usize> = keys
+            .iter()
+            .map(|&k| {
+                println!("{}", k);
+                self.count_steps_sigle_p2(k)
+            })
+            .collect();
+
+        println!("{:?}", steps_vec);
+
+        let mut steps = steps_vec[0];
+
+        for s in steps_vec.iter().skip(1) {
+            steps = lcm(steps, *s);
         }
 
         steps
@@ -63,5 +107,7 @@ impl Day8 {
 fn main() {
     let day8 = Day8::from_file("inputs/day08/input.txt");
 
-    println!("{}", day8.count_steps());
+    println!("Part 1: {}", day8.count_steps());
+
+    println!("Part 2: {}", day8.count_steps_p2());
 }
